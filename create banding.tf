@@ -33,7 +33,7 @@ resource "aws_security_group" "web_sg" {
 resource "aws_instance" "checking_terra" {
   ami             = "ami-07b9427bb313ac35c"  # Update with your preferred AMI ID
   instance_type   = "t2.medium"  # Update with your desired instance type
-  key_name        = "unbuntukeypair"
+  key_name        = "unbuntukeypair.pem"
   security_groups = [aws_security_group.web_sg.name]
 
   tags = {

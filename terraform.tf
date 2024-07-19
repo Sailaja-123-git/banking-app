@@ -50,7 +50,7 @@ resource "aws_route_table" "demo_rt" {
 resource "aws_subnet" "demo_subnet" {
   vpc_id = aws_vpc.demo_vpc.id
   cidr_block = "10.0.1.0/24"
-  availability_zone = "us-east-1"
+  availability_zone = "us-east-1b"
   tags = {
     Name = "demo-subnet"
   }
@@ -69,13 +69,16 @@ resource "aws_security_group" "demo_sg" {
   vpc_id      = aws_vpc.demo_vpc.id
 
   ingress {
+    description = "Allow all inbound traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   egress {
+    description = "Allow all outbound traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
@@ -84,19 +87,21 @@ resource "aws_security_group" "demo_sg" {
   }
 
   ingress {
-    description = "HTTPS traffic"
+    description = "Allow HTTPS traffic"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
   ingress {
-    description = "HTTP traffic"
+    description = "Allow HTTP traffic"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
   tags = {
     Name = "demo-sg"
   }
@@ -111,9 +116,9 @@ resource "aws_network_interface" "demo_ni" {
 
 # Creating an Ubuntu EC2 instance
 resource "aws_instance" "test_server" {
-  ami               = "ami-0a0e5d9c7acc336f1"
+  ami               = "ami-0a0e5d9c7acc336f1"  # Make sure this is valid for the region
   instance_type     = "t2.micro"
-  key_name          = "unbuntukeypair"
+  key_name          = "awsec2"
 
   network_interface {
     device_index         = 0

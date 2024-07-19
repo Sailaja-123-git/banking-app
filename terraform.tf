@@ -102,6 +102,16 @@ resource "aws_security_group" "demo_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "Allow SSH traffic"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    # Optional: For better security, you can restrict SSH access to specific IP ranges
+    # cidr_blocks = ["your_ip_address/32"]
+  }
+
   tags = {
     Name = "demo-sg"
   }
@@ -116,7 +126,7 @@ resource "aws_network_interface" "demo_ni" {
 
 # Creating an Ubuntu EC2 instance
 resource "aws_instance" "test_server" {
-  ami               = "ami-0a0e5d9c7acc336f1"  # Make sure this is valid for the region
+  ami               = "ami-0a0e5d9c7acc336f1"  # Verify this AMI ID
   instance_type     = "t2.micro"
   key_name          = "unbuntukeypair"
 

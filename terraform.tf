@@ -118,7 +118,7 @@ resource "aws_network_interface" "demo_ni" {
 resource "aws_instance" "test_server" {
   ami               = "ami-0a0e5d9c7acc336f1"  # Make sure this is valid for the region
   instance_type     = "t2.micro"
-  key_name          = "awsec2"
+  key_name          = "unbuntukeypair"
 
   network_interface {
     device_index         = 0

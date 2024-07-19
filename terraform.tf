@@ -50,7 +50,7 @@ resource "aws_route_table" "demo_rt" {
 resource "aws_subnet" "demo_subnet" {
   vpc_id = aws_vpc.demo_vpc.id
   cidr_block = "10.0.1.0/24"
-  availability_zone = "us-east-1b"
+  availability_zone = "us-east-1"
   tags = {
     Name = "demo-subnet"
   }
